@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <a href="/">Express MVC</a>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="/">Trang chủ</a></li>
+        <li><a href="/about">Giới thiệu</a></li>
+        <li><a href="/contact">Liên hệ</a></li>
+        <li><a href="/create-user" class="btn-primary">Thêm User</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="breadcrumb">
+      <a href="/">Trang chủ</a> / <span>Chi tiết người dùng</span>
+    </div>
+
+    <div class="user-detail-card">
+      <div class="user-detail-avatar">
+        <%= user.name.charAt(0).toUpperCase() %>
+      </div>
+      <div class="user-detail-info">
+        <h1><%= user.name %></h1>
+        <p>📧 Email: <%= user.email %></p>
+        <p>🆔 ID: #<%= user._id %></p>
+        <p>📅 Ngày tạo: <%= new Date(user.createdAt).toLocaleDateString('vi-VN') %></p>
+        <a href="/" class="btn-back">← Quay lại</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Express MVC TypeScript. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <a href="/">Express MVC</a>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="/">Trang chủ</a></li>
+        <li><a href="/about">Giới thiệu</a></li>
+        <li><a href="/contact">Liên hệ</a></li>
+        <li><a href="/create-user" class="btn-primary">Thêm User</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>📖 Giới thiệu</h1>
+    </div>
+
+    <div class="content-section">
+      <h2>Về dự án này</h2>
+      <p><%= description %></p>
+      
+      <h3>🛠️ Công nghệ sử dụng:</h3>
+      <ul class="tech-list">
+        <li><strong>Node.js & Express:</strong> Backend framework mạnh mẽ</li>
+        <li><strong>TypeScript:</strong> Mang lại type safety và developer experience tốt hơn</li>
+        <li><strong>EJS:</strong> Template engine đơn giản, dễ sử dụng</li>
+        <li><strong>MVC Pattern:</strong> Kiến trúc phân tách rõ ràng giữa Model, View, Controller</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Express MVC TypeScript. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

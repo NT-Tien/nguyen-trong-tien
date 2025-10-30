@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <a href="/">Express MVC</a>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="/">Trang chủ</a></li>
+        <li><a href="/about">Giới thiệu</a></li>
+        <li><a href="/contact">Liên hệ</a></li>
+        <li><a href="/create-user" class="btn-primary">Thêm User</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="error-page">
+      <div class="error-icon">⚠️</div>
+      <h1 class="error-code">500</h1>
+      <h2>Có lỗi xảy ra</h2>
+      <p><%= error %></p>
+      <a href="/" class="btn-home">← Về trang chủ</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Express MVC TypeScript. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

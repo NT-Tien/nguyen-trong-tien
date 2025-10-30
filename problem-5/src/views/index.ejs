@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+                'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            padding: 24px;
+            color: rgba(0, 0, 0, 0.85);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 2px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+        }
+
+        .header {
+            background: white;
+            color: rgba(0, 0, 0, 0.85);
+            padding: 24px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.45);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 4px 11px;
+            border: 1px solid #d9d9d9;
+            border-radius: 2px;
+            font-size: 14px;
+            line-height: 1.5715;
+            height: 32px;
+            transition: all 0.3s;
+        }
+
+        .search-box input:hover {
+            border-color: #40a9ff;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #40a9ff;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+        
+        .btn {
+            padding: 4px 15px;
+            border: 1px solid #d9d9d9;
+            border-radius: 2px;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            height: 32px;
+            line-height: 1.5715;
+            background: white;
+            color: rgba(0, 0, 0, 0.85);
+        }
+
+        .btn:hover {
+            color: #40a9ff;
+            border-color: #40a9ff;
+        }
+
+        .btn-primary {
+            background: #1890ff;
+            color: white;
+            border-color: #1890ff;
+        }
+
+        .btn-primary:hover {
+            background: #40a9ff;
+            border-color: #40a9ff;
+            color: white;
+        }
+
+        .btn-success {
+            background: #52c41a;
+            color: white;
+            border-color: #52c41a;
+        }
+
+        .btn-success:hover {
+            background: #73d13d;
+            border-color: #73d13d;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #faad14;
+            color: white;
+            border-color: #faad14;
+        }
+
+        .btn-warning:hover {
+            background: #ffc53d;
+            border-color: #ffc53d;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #ff4d4f;
+            color: white;
+            border-color: #ff4d4f;
+        }
+
+        .btn-danger:hover {
+            background: #ff7875;
+            border-color: #ff7875;
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0px 7px;
+            font-size: 14px;
+            height: 24px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            padding: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+        }
+
+        thead {
+            background: #fafafa;
+        }
+
+        th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.85);
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            user-select: none;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        th:hover {
+            background: #f5f5f5;
+        }
+
+        th.sortable::after {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: 8px;
+            vertical-align: middle;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid #bfbfbf;
+            opacity: 0.3;
+        }
+
+        th.sort-asc::after {
+            border-top: 4px solid #1890ff;
+            border-bottom: none;
+            opacity: 1;
+        }
+
+        th.sort-desc::after {
+            border-top: none;
+            border-bottom: 4px solid #1890ff;
+            opacity: 1;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.85);
+        }
+
+        tbody tr {
+            transition: background 0.3s;
+        }
+
+        tbody tr:hover {
+            background: #fafafa;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            gap: 8px;
+        }
+
+        .pagination button {
+            min-width: 32px;
+            height: 32px;
+            padding: 0 8px;
+            border: 1px solid #d9d9d9;
+            background: white;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.85);
+            line-height: 30px;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            color: #1890ff;
+            border-color: #1890ff;
+        }
+
+        .pagination button:disabled {
+            color: rgba(0, 0, 0, 0.25);
+            background: #f5f5f5;
+            border-color: #d9d9d9;
+            cursor: not-allowed;
+        }
+
+        .pagination .current {
+            min-width: 32px;
+            height: 32px;
+            padding: 0 8px;
+            background: #1890ff;
+            color: white;
+            border: 1px solid #1890ff;
+            border-radius: 2px;
+            font-weight: 400;
+            line-height: 32px;
+            text-align: center;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 100px auto;
+            padding: 0;
+            border-radius: 2px;
+            width: 90%;
+            max-width: 520px;
+            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 16px 24px;
+            background: white;
+            color: rgba(0, 0, 0, 0.85);
+            border-bottom: 1px solid #f0f0f0;
+            border-radius: 2px 2px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 0.85);
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 4px 11px;
+            border: 1px solid #d9d9d9;
+            border-radius: 2px;
+            font-size: 14px;
+            height: 32px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:hover {
+            border-color: #40a9ff;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #40a9ff;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+
+        .modal-footer {
+            padding: 10px 16px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            background: white;
+            border-top: 1px solid #f0f0f0;
+            border-radius: 0 0 2px 2px;
+        }
+
+        .close {
+            font-size: 16px;
+            font-weight: normal;
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.45);
+            line-height: 1;
+            background: transparent;
+            border: none;
+            padding: 0;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: rgba(0, 0, 0, 0.75);
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 64px 20px;
+            color: rgba(0, 0, 0, 0.25);
+        }
+
+        .no-data h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: rgba(0, 0, 0, 0.45);
+        }
+
+        .info-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #e6f7ff;
+            color: #1890ff;
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: 400;
+            margin-right: 8px;
+            border: 1px solid #91d5ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><%= title %></h1>
+            <p>Quản lý người dùng với tìm kiếm và phân trang</p>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchName" placeholder="Tìm theo tên" value="<%= query['search[name:contains]'] || '' %>">
+                <input type="text" id="searchEmail" placeholder="Tìm theo email" value="<%= query['search[email:contains]'] || '' %>">
+                <button class="btn btn-primary" onclick="search()">Tìm kiếm</button>
+                <button class="btn" onclick="clearSearch()">Reset</button>
+            </div>
+            <button class="btn btn-success" onclick="openCreateModal()">Thêm mới</button>
+        </div>
+
+        <div class="table-container">
+            <div style="padding: 16px 16px 0 16px;">
+                <span class="info-badge">Tổng: <%= total %> người dùng</span>
+                <span class="info-badge">Trang: <%= page %>/<%= totalPages %></span>
+            </div>
+            
+            <% if (users.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sortable" data-field="name" onclick="sortTable('name')">Tên</th>
+                        <th class="sortable" data-field="email" onclick="sortTable('email')">Email</th>
+                        <th class="sortable" data-field="createdAt" onclick="sortTable('createdAt')">Ngày tạo</th>
+                        <th style="width: 200px;">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user => { %>
+                    <tr>
+                        <td><strong><%= user.name %></strong></td>
+                        <td><%= user.email %></td>
+                        <td><%= new Date(user.createdAt).toLocaleString('vi-VN') %></td>
+                        <td>
+                            <div class="actions">
+                                <button class="btn btn-warning btn-sm" onclick='openEditModal(<%= JSON.stringify(user) %>)'>Sửa</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteUser('<%= user._id %>')">Xóa</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            <% } else { %>
+            <div class="no-data">
+                <h3>Không có dữ liệu</h3>
+                <p>Thêm người dùng mới hoặc thử tìm kiếm khác</p>
+            </div>
+            <% } %>
+        </div>
+        
+        <% if (totalPages > 1) { %>
+        <div class="pagination">
+            <button onclick="changePage(<%= page - 1 %>)" <%= page <= 1 ? 'disabled' : '' %>>‹</button>
+
+            <% for(let i = Math.max(1, page - 2); i <= Math.min(totalPages, page + 2); i++) { %>
+                <% if (i === page) { %>
+                    <span class="current"><%= i %></span>
+                <% } else { %>
+                    <button onclick="changePage(<%= i %>)"><%= i %></button>
+                <% } %>
+            <% } %>
+
+            <button onclick="changePage(<%= page + 1 %>)" <%= page >= totalPages ? 'disabled' : '' %>>›</button>
+        </div>
+        <% } %>
+    </div>
+    
+    <!-- Modal Tạo/Sửa -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Thêm người dùng mới</h2>
+                <button class="close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    <input type="hidden" id="userId">
+                    <div class="form-group">
+                        <label>Tên <span style="color: #ff4d4f;">*</span></label>
+                        <input type="text" id="userName" required placeholder="Nhập tên người dùng">
+                    </div>
+                    <div class="form-group">
+                        <label>Email <span style="color: #ff4d4f;">*</span></label>
+                        <input type="email" id="userEmail" required placeholder="Nhập email">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeModal()">Hủy</button>
+                <button class="btn btn-primary" onclick="saveUser()">Lưu</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize currentSort from URL params
+        let currentSort = { field: 'createdAt', direction: 'desc' };
+        (function initSort() {
+            const params = new URLSearchParams(window.location.search);
+            for (const [key, value] of params) {
+                if (key.startsWith('sort[')) {
+                    const match = key.match(/sort\[(.+)\]/);
+                    if (match) {
+                        currentSort.field = match[1];
+                        currentSort.direction = value;
+                    }
+                }
+            }
+        })();
+        
+        function openCreateModal() {
+            document.getElementById('modalTitle').textContent = 'Thêm người dùng mới';
+            document.getElementById('userId').value = '';
+            document.getElementById('userName').value = '';
+            document.getElementById('userEmail').value = '';
+            document.getElementById('userModal').style.display = 'block';
+        }
+        
+        function openEditModal(user) {
+            document.getElementById('modalTitle').textContent = 'Sửa thông tin người dùng';
+            document.getElementById('userId').value = user._id;
+            document.getElementById('userName').value = user.name;
+            document.getElementById('userEmail').value = user.email;
+            document.getElementById('userModal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('userModal').style.display = 'none';
+        }
+        
+        async function saveUser() {
+            const id = document.getElementById('userId').value;
+            const name = document.getElementById('userName').value.trim();
+            const email = document.getElementById('userEmail').value.trim();
+            
+            if (!name || !email) {
+                alert('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
+            
+            try {
+                if (id) {
+                    // Update
+                    const response = await fetch(`/user/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email })
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        alert('Cập nhật thành công!');
+                        location.reload();
+                    } else {
+                        alert('Lỗi: ' + data.message);
+                    }
+                } else {
+                    // Create
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/create-user';
+                    
+                    const nameInput = document.createElement('input');
+                    nameInput.type = 'hidden';
+                    nameInput.name = 'name';
+                    nameInput.value = name;
+                    
+                    const emailInput = document.createElement('input');
+                    emailInput.type = 'hidden';
+                    emailInput.name = 'email';
+                    emailInput.value = email;
+                    
+                    form.appendChild(nameInput);
+                    form.appendChild(emailInput);
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            } catch (error) {
+                alert('Có lỗi xảy ra!');
+            }
+        }
+        
+        async function deleteUser(id) {
+            if (!confirm('Bạn có chắc muốn xóa người dùng này?')) return;
+            
+            try {
+                const response = await fetch(`/user/${id}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert('Xóa thành công!');
+                    location.reload();
+                } else {
+                    alert('Lỗi: ' + data.message);
+                }
+            } catch (error) {
+                alert('Có lỗi xảy ra!');
+            }
+        }
+        
+        function search() {
+            const params = new URLSearchParams(window.location.search);
+            params.delete('page');
+            
+            const name = document.getElementById('searchName').value.trim();
+            const email = document.getElementById('searchEmail').value.trim();
+            
+            if (name) {
+                params.set('search[name:contains]', name);
+            } else {
+                params.delete('search[name:contains]');
+            }
+            
+            if (email) {
+                params.set('search[email:contains]', email);
+            } else {
+                params.delete('search[email:contains]');
+            }
+            
+            window.location.search = params.toString();
+        }
+        
+        function clearSearch() {
+            window.location.href = '/';
+        }
+        
+        function sortTable(field) {
+            const params = new URLSearchParams(window.location.search);
+
+            // Remove all existing sort parameters
+            const keysToDelete = [];
+            for (const key of params.keys()) {
+                if (key.startsWith('sort[')) {
+                    keysToDelete.push(key);
+                }
+            }
+            keysToDelete.forEach(key => params.delete(key));
+
+            // Determine new sort direction
+            if (currentSort.field === field) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.field = field;
+                currentSort.direction = 'asc';
+            }
+
+            // Set new sort parameter
+            params.set(`sort[${field}]`, currentSort.direction);
+            window.location.search = params.toString();
+        }
+        
+        function changePage(page) {
+            if (page < 1) return;
+            const params = new URLSearchParams(window.location.search);
+            params.set('page', page);
+            window.location.search = params.toString();
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('userModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        // Apply current sort indicator
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            params.forEach((value, key) => {
+                if (key.startsWith('sort[')) {
+                    const field = key.match(/sort\[(.+)\]/)[1];
+                    const th = document.querySelector(`th[data-field="${field}"]`);
+                    if (th) {
+                        th.classList.remove('sort-asc', 'sort-desc');
+                        th.classList.add(value === 'asc' ? 'sort-asc' : 'sort-desc');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
